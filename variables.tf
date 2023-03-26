@@ -37,12 +37,12 @@ variable "storage_type" {
 }
 variable "username" {
   description = "Username for the master DB user."
-  default = "databasemack"
+  default = "databaseteste"
   type = string
 }
 variable "password" {
   description = "password of the database"
-  default = "pwdmack"
+  default = "password"
   type = string
 }
 variable "instance_class" {
@@ -67,11 +67,22 @@ variable "skip_final_snapshot" {
 }
 variable "identifier" {
   description = "The name of the RDS instance"
-  default = "terraform-database-mack"
+  default = "terraform-database-test"
   type = string
 }
 variable "port" {
   description = "The port on which the DB accepts connections"
   default = "3306"
   type = number
+}
+
+variable "az_number" {
+  default = {
+    a = 1
+    b = 2
+    c = 3
+    d = 4
+    e = 5
+    f = 6
+  }
 }
