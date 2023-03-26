@@ -33,6 +33,10 @@ data "aws_ami" "amazonlinux" {
 
 }
 
+data "aws_availability_zone" "mack_az" {
+  name = "us-east-1"
+}
+
 resource "aws_security_group" "sg_web" {
   name        = "sgweb${terraform.workspace}"
   description = "Mackenzie Security Group Web"
@@ -185,6 +189,7 @@ locals {
 
   resource "aws_db_instance" "bd_mack" {
     allocated_storage = (terraform.workspace == "Dev") ? 20 : (terraform.workspace == "Hom") ? 30 : 50
+    max_allocated_storage = (terraform.workspace == "Prd") ? 100 : 0
     storage_type = var.storage_type
     engine = var.engine
     engine_version = var.engine_version
@@ -196,4 +201,5 @@ locals {
     identifier = var.identifier
     parameter_group_name = var.parameter_group_name
     skip_final_snapshot = var.skip_final_snapshot
+    availability_zone = (terraform.workspace == "Prd") ? var.az_number[data.aws_availability_zone.mack_az.name_suffix]
 }
